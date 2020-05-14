@@ -1,0 +1,31 @@
+{
+    "plugins\/magicmirror\/core\/class\/magicmirror.class.php": {
+        "L\'adresse IP ne peut pas être vide !": "L\'adresse IP ne peut pas être vide !",
+        "Eteindre": "Shutdown",
+        "Redémarer": "Restart",
+        "Recharger": "Reload",
+        "Rafraîchir": "Refresh",
+        "Statut": "Status",
+        "Affichage": "Display",
+        "Masquer l\'affichage": "Disable display",
+        "Notification": "Notification",
+        "Fond d\'écran": "Background",
+        "Masquer fond d\'écran": "Disable Background",
+		"Afficher ou Masquer le fond d\'écran": "Toggle Background"
+    },
+    "plugins\/magicmirror\/desktop\/php\/magicmirror.php": {
+        "Mes MagicMirror2": "My MagicMirror2",
+        "Nom de l'équipement": "Equipment Name",
+        "Adresse IP": "IP Address",
+        "Type de notification": "Notification type",
+        "Notification": "Notification",
+        "Alerte": "Alert",
+        "Délai d'affichage de la notification": "Notification timer",
+        "MM Plugin MMM-Background": "Enable Plugin MMM-Background"
+    },
+	"plugins\/magicmirror2\/core\/template\/dashboard\/magicmirror2.html": {
+		"Voulez-vous vraiment éteindre l\'équipement MagicMirror2 ?": "Do you realy want to shutdown this MagicMirror2 ?",
+		"Voulez-vous vraiment redémarer l\'équipement MagicMirror2 ?": "Do you realy want to reboot MagicMirror2 ?",
+		"Voulez-vous vraiment <b>recharger</b> le programme MagicMirror2 ?": "Do you relay want to reload MagicMirror2 ?",
+	}
+}

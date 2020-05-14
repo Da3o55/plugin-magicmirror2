@@ -1,0 +1,339 @@
+<div id="plugin_container" class="eqLogic-widget eqLogic allowResize" style="width:#width#;height:#height#;border:#border#;border-radius:#border-radius#;background-color: #background-color#;color: #color#; #style#" data-category="" data-eqLogic_id="#id#" data-version="#version#" >
+	<span class="cmd refresh pull-right cursor" data-cmd_id="#refresh_cmd_id#"><i class="fas fa-sync"></i></span>
+	<center class="widget-name"><strong><a href="#eqLink#" style="font-size : 1.1em;#hideEqLogicName#">#name_display#</strong></a>
+	</center>
+	<script>
+		var cmd = $('.cmd[data-cmd_id=#refresh_cmd_id#]');
+		if ('#refresh_cmd_id#' != '' && '#refresh_cmd_isVisible#' != '0'){
+			$('.eqLogic[data-eqLogic_id=#id#] .refresh').on('click', function () {
+				jeedom.cmd.execute({id: '#refresh_cmd_id#'});
+			});
+		}else{
+			$('.eqLogic[data-eqLogic_uid=#id#] .refresh').remove();
+			cmd.hide();
+		}
+	</script>
+	<center>
+
+<!-- Général Status -->
+		<div class="cmd cmd-widget cursor" data-type="action" data-subtype="other" data-template="tmplicon" data-cmd_id="#wdgtCmd_id_status#" data-cmd_uid="cmd#wdgtCmd_id_status##uid#" data-version="#version#" data-eqlogic_id="8">
+		  <div class="title ">
+			<div class="cmdName">#wdgtCmd_name_status#</div>
+		  </div>
+		  <div class="content-sm ">
+			<span class="iconCmd"><i class='fas fa-question'></i></span>
+		  </div>
+		  <script>
+			jeedom.cmd.update['#wdgtCmd_id_status#'] = function(_options){
+			  var cmd = $('.cmd[data-cmd_id=#wdgtCmd_id_status#]');
+			  cmd.attr('title','Ouvrir la page de ce MagicMirror²');
+			  if (_options.display_value == '1' || _options.display_value >= 1 || _options.display_value == '99' || _options.display_value == 'on') {
+				if ('#wdgtCmd_value_status#' == '0') {
+					cmd.find('.iconCmd').empty().append("<i class='fas fa-times'></i>");
+				}else{
+					cmd.show();
+					cmd.find('.iconCmd').empty().append("<i class='fas fa-check'></i>");
+				}
+			  } else {
+				cmd.hide();
+			  }
+			}
+			jeedom.cmd.update['#wdgtCmd_id_status#']({display_value:'#wdgtCmd_isVisible_status#'});
+			$('.cmd[data-cmd_uid=cmd#wdgtCmd_id_status##uid#] .iconCmd').off().on('click', function () {
+			  //jeedom.cmd.execute({id: '#wdgtCmd_id_status#'});
+			  window.open("http://#magic_url#:8080/");			  
+			});
+		  </script>
+		</div>
+
+<!-- REMOTE.HTML -->
+		<div class="cmd cmd-widget cursor" data-type="action" data-subtype="other" data-template="tmplicon" data-cmd_id="#wdgtCmd_id_remotePage#" data-cmd_uid="cmd#wdgtCmd_id_remotePage##uid#" data-version="#version#" data-eqlogic_id="8">
+		  <div class="title ">
+			<div class="cmdName">#wdgtCmd_name_remotePage#</div>
+		  </div>
+		  <div class="content-sm ">
+			<span class="iconCmd"><i class='fas fa-question'></i></span>
+		  </div>
+		  <script>
+			jeedom.cmd.update['#wdgtCmd_id_remotePage#'] = function(_options){
+			  var cmd = $('.cmd[data-cmd_id=#wdgtCmd_id_remotePage#]');
+			  cmd.attr('title','Accéder à la page REMOTE de ce MagicMirror²');
+			  if (_options.display_value == '1' || _options.display_value >= 1 || _options.display_value == '99' || _options.display_value == 'on') {
+				if ('#wdgtCmd_value_status#' == '0') {
+					cmd.find('.iconCmd').empty().append("<i class='fas fa-times'></i>");
+				}else{
+					cmd.show();
+					cmd.find('.iconCmd').empty().append("<i class='fas fa-external-link-alt'></i>");
+				}
+			  } else {
+				cmd.hide();
+			  }
+			}
+			jeedom.cmd.update['#wdgtCmd_id_remotePage#']({display_value:'#wdgtCmd_isVisible_remotePage#'});
+			$('.cmd[data-cmd_uid=cmd#wdgtCmd_id_remotePage##uid#] .iconCmd').off().on('click', function () {
+			  //jeedom.cmd.execute({id: '#wdgtCmd_id_status#'});
+			  window.open("http://#magic_url#:8080/remote.html");			  
+			});
+		  </script>
+		</div>
+		
+<!-- POWEROFF -->
+		<div class="cmd cmd-widget cursor" data-type="action" data-subtype="other" data-template="tmplicon" data-cmd_id="#wdgtCmd_id_poweroff#" data-cmd_uid="cmd#wdgtCmd_id_poweroff##uid#" data-version="#version#" data-eqlogic_id="8">
+		  <div class="title ">
+			<div class="cmdName">#wdgtCmd_name_poweroff#</div>
+		  </div>
+		  <div class="content-sm ">
+			<span class="iconCmd"><i class='fas fa-question'></i></span>
+		  </div>
+		  <script>
+			jeedom.cmd.update['#wdgtCmd_id_poweroff#'] = function(_options){
+			  var cmd = $('.cmd[data-cmd_id=#wdgtCmd_id_poweroff#]');
+			  if (_options.display_value == '1' || _options.display_value >= 1 || _options.display_value == '99' || _options.display_value == 'on') {
+				if ('#wdgtCmd_value_status#' == '0') {
+					cmd.find('.iconCmd').empty().append("<i class='fas fa-times'></i>");
+				}else{
+					cmd.show();
+					cmd.find('.iconCmd').empty().append("<i class='fas fa-power-off'></i>");
+				}
+			  } else {
+				cmd.hide();
+			  }
+			}
+			jeedom.cmd.update['#wdgtCmd_id_poweroff#']({display_value:'#wdgtCmd_isVisible_poweroff#'});
+			$('.cmd[data-cmd_uid=cmd#wdgtCmd_id_poweroff##uid#] .iconCmd').off().on('click', function () {
+				if('#wdgtCmd_value_status#' != '0'){
+					bootbox.confirm('{{Voulez-vous vraiment éteindre l\'équipement MagicMirror2 ?}}', function (result) {
+					if (result) {
+						jeedom.cmd.execute({id: '#wdgtCmd_id_poweroff#'});
+					}
+					});
+				}
+			});
+		  </script>
+		</div>
+		
+<!-- RESTART -->
+		<div class="cmd cmd-widget cursor" data-type="action" data-subtype="other" data-template="tmplicon" data-cmd_id="#wdgtCmd_id_restart#" data-cmd_uid="cmd#wdgtCmd_id_restart##uid#" data-version="#version#" data-eqlogic_id="8">
+		  <div class="title ">
+			<div class="cmdName">#wdgtCmd_name_restart#</div>
+		  </div>
+		  <div class="content-sm ">
+			<span class="iconCmd"><i class='fas fa-redo-alt'></i></span>
+		  </div>
+		</div>
+		  <input type="hidden" id="cmdRestartId" value="#wdgtCmd_id_restart#">
+		  <script>
+			jeedom.cmd.update['#wdgtCmd_id_restart#'] = function(_options){
+			  var cmd = $('.cmd[data-cmd_id=#wdgtCmd_id_restart#]');
+			  if (_options.display_value == '1' || _options.display_value >= 1 || _options.display_value == '99' || _options.display_value == 'on') {
+				cmd.show();
+				if('#wdgtCmd_value_status#' == '0'){
+					cmd.find('.iconCmd').empty().append("<i class='fas fa-times'></i>");
+				}else{
+					cmd.find('.iconCmd').empty().append("<i class='fas fa-redo-alt'></i>");
+				}
+			  } else {
+				cmd.hide();
+			  } 
+			}
+			jeedom.cmd.update['#wdgtCmd_id_restart#']({display_value:'#wdgtCmd_isVisible_restart#'});
+			$('.cmd[data-cmd_uid=cmd#wdgtCmd_id_restart##uid#] .iconCmd').off().on('click', function () {
+				if('#wdgtCmd_value_status#' != '0'){
+					bootbox.confirm('{{Voulez-vous vraiment redémarer l\'équipement MagicMirror2 ?}}', function (result) {
+					if (result) {
+						jeedom.cmd.execute({id: '#wdgtCmd_id_restart#'});
+					}
+					});
+			}
+			});
+
+		  </script>
+
+<!-- RELOAD -->
+		<div class="cmd cmd-widget cursor" data-type="action" data-subtype="other" data-template="tmplicon" data-cmd_id="#wdgtCmd_id_reload#" data-cmd_uid="cmd#wdgtCmd_id_reload##uid#" data-version="#version#" data-eqlogic_id="8">
+		  <div class="title ">
+			<div class="cmdName">#wdgtCmd_name_reload#</div>
+		  </div>
+		  <div class="content-sm ">
+			<span class="iconCmd"><i class='fas fa-times'></i></span>
+		  </div>
+		  <input type="hidden" id="cmdReloadId" value="#wdgtCmd_id_reload#">
+		  <script>
+			jeedom.cmd.update['#wdgtCmd_id_reload#'] = function(_options){
+			  var cmd = $('.cmd[data-cmd_id=#wdgtCmd_id_reload#]');
+			  if (_options.display_value == '1' || _options.display_value >= 1 || _options.display_value == '99' || _options.display_value == 'on') {
+				cmd.show();
+				if('#wdgtCmd_value_status#' == '0'){
+					cmd.find('.iconCmd').empty().append("<i class='fas fa-times'></i>");
+				}else{
+					cmd.find('.iconCmd').empty().append("<i class='fas fa-sync-alt'></i>");
+				}
+			  } else {
+				cmd.hide();
+			  }
+			}
+			jeedom.cmd.update['#wdgtCmd_id_reload#']({display_value:'#wdgtCmd_isVisible_reload#'});
+			$('.cmd[data-cmd_uid=cmd#wdgtCmd_id_reload##uid#] .iconCmd').off().on('click', function () {
+				if('#wdgtCmd_value_status#' != '0'){
+					bootbox.confirm('{{Voulez-vous vraiment <b>recharger</b> le programme MagicMirror2 ?}}', function (result) {
+					if (result) {
+						jeedom.cmd.execute({id: '#wdgtCmd_id_reload#'});
+					}
+					});
+				}
+			});
+		  </script>
+		</div>
+
+<!-- REFRESH -->
+		<div class="cmd cmd-widget cursor" data-type="action" data-subtype="other" data-template="tmplicon" data-cmd_id="#wdgtCmd_id_refreshHtml#" data-cmd_uid="cmd#wdgtCmd_id_refreshHtml##uid#" data-version="#version#" data-eqlogic_id="8">
+		  <div class="title ">
+			<div class="cmdName">#wdgtCmd_name_refreshHtml#</div>
+		  </div>
+		  <div class="content-sm ">
+			<span class="iconCmd"><i class='fas fa-times'></i></span>
+		  </div>
+		  <script>
+			jeedom.cmd.update['#wdgtCmd_id_refreshHtml#'] = function(_options){
+			  var cmd = $('.cmd[data-cmd_id=#wdgtCmd_id_refreshHtml#]');
+			  if (_options.display_value == '1' || _options.display_value >= 1 || _options.display_value == '99' || _options.display_value == 'on') {
+				cmd.show();
+				if('#wdgtCmd_value_status#' == '0'){
+					cmd.find('.iconCmd').empty().append("<i class='fas fa-times'></i>");
+				}else{
+					cmd.find('.iconCmd').empty().append("<i class='fas fa-recycle'></i>");
+				}
+			  } else {
+				cmd.hide();
+			  }
+			}
+			jeedom.cmd.update['#wdgtCmd_id_refreshHtml#']({display_value:'#wdgtCmd_isVisible_refreshHtml#'});
+			$('.cmd[data-cmd_uid=cmd#wdgtCmd_id_refreshHtml##uid#] .iconCmd').off().on('click', function () {
+				if('#wdgtCmd_value_status#' != '0'){
+					jeedom.cmd.execute({id: '#wdgtCmd_id_refreshHtml#'});
+				}
+			});
+		  </script>
+		</div>
+		
+<!-- MONITOR STATUS -->	
+		<div class="cmd cmd-widget cursor" data-type="action" data-subtype="other" data-template="tmplicon" data-cmd_id="#wdgtCmd_id_monitorstatus#" data-cmd_uid="cmd#wdgtCmd_id_monitorstatus##uid#" data-version="#version#" data-eqlogic_id="8">
+		  <div class="title ">
+			<div class="cmdName">#wdgtCmd_name_monitorstatus#</div>
+		  </div>
+		  <div class="content-sm ">
+			<span class="iconCmd"><i class='fas fa-times'></i></span>
+		  </div>
+		  <script>
+			jeedom.cmd.update['#wdgtCmd_id_monitorstatus#'] = function(_options){
+			  var cmd = $('.cmd[data-cmd_id=#wdgtCmd_id_monitorstatus#]');
+			  if (_options.display_value == '1' || _options.display_value >= 1 || _options.display_value == '99' || _options.display_value == 'on') {
+				if ('#wdgtCmd_value_status#' == '0') {
+					cmd.find('.iconCmd').empty().append("<i class='fas fa-times'></i>");
+				}else{
+					cmd.show();
+					switch ('#wdgtCmd_value_monitorstatus#') {
+						case '0':
+							cmd.find('.iconCmd').empty().append("<i class='fas fa-eye-slash'></i>");
+							break;
+						case '1':
+							cmd.find('.iconCmd').empty().append("<i class='fas fa-eye'></i>");
+							break;
+						case '2':
+							cmd.find('.iconCmd').empty().append("<i class='fas fa-exclamation'></i>");
+							cmd.attr('title','Commande désactivée, il semble y avoir un problème.');
+							break;
+						default:
+							cmd.find('.iconCmd').empty().append("<i class='fas fa-question'></i>");
+					}
+				}
+			  } else {
+				cmd.hide();
+			  }
+			}
+			jeedom.cmd.update['#wdgtCmd_id_monitorstatus#']({display_value:'#wdgtCmd_isVisible_monitorstatus#'});
+			$('.cmd[data-cmd_uid=cmd#wdgtCmd_id_monitorstatus##uid#] .iconCmd').off().on('click', function () {
+			if("#wdgtCmd_isVisible_monitortoggle#" == '1' && "#wdgtCmd_value_monitorstatus#" != 2){
+				jeedom.cmd.execute({id: '#wdgtCmd_id_monitorstatus#'});
+			}else{
+				//alert("Action désactivée !");
+			}
+			});
+		  </script>
+		</div>
+
+<!-- BACKGROUND STATUS -->
+		<div class="cmd cmd-widget cursor" data-type="action" data-subtype="other" data-template="tmplicon" data-cmd_id="#wdgtCmd_id_backgroundstatus#" data-cmd_uid="cmd#wdgtCmd_id_backgroundstatus##uid#" data-version="#version#" data-eqlogic_id="8">
+		  <div class="title ">
+			<div class="cmdName">#wdgtCmd_name_backgroundstatus#</div>
+		  </div>
+		  <div class="content-sm ">
+			<span class="iconCmd"><i class='fas fa-times'></i></span>
+		  </div>
+		  <script>
+			jeedom.cmd.update['#wdgtCmd_id_backgroundstatus#'] = function(_options){
+			  var cmd = $('.cmd[data-cmd_id=#wdgtCmd_id_backgroundstatus#]');
+			  if (_options.display_value == '1' || _options.display_value >= 1 || _options.display_value == '99' || _options.display_value == 'on') {
+				if ('#wdgtCmd_value_status#' == '0') {
+					cmd.find('.iconCmd').empty().append("<i class='fas fa-times'></i>");
+				}else{
+					cmd.show();
+					switch ('#wdgtCmd_value_backgroundstatus#') { //metre +0 pour contourner le probleme temporaire !
+						case '0':
+							cmd.find('.iconCmd').empty().append("<i class='fas fa-ban'></i>");
+							break;
+						case '1':
+							cmd.find('.iconCmd').empty().append("<i class='fas fa-image'></i>");
+							break;
+						case '2':
+							cmd.find('.iconCmd').empty().append("<i class='fas fa-exclamation'></i>");
+							cmd.attr('title','Commande désactivée, il semble y avoir un problème.');
+							break;
+						default:
+							cmd.find('.iconCmd').empty().append("<i class='fas fa-question'></i>");
+					}
+				}
+			  } else {
+				cmd.hide();
+			  }
+			}
+			jeedom.cmd.update['#wdgtCmd_id_backgroundstatus#']({display_value:'#wdgtCmd_isVisible_backgroundstatus#'});
+			$('.cmd[data-cmd_uid=cmd#wdgtCmd_id_backgroundstatus##uid#] .iconCmd').off().on('click', function () {
+			if("#wdgtCmd_isVisible_backgroundtoggle#" == '1' && "#wdgtCmd_value_backgroundstatus#" != 2){
+				jeedom.cmd.execute({id: '#wdgtCmd_id_backgroundstatus#'});
+			}else{
+				//alert("Action désactivée !");
+			}
+			});
+		  </script>
+		</div>
+
+<!-- NOTIFICATION -->
+		<div class="">
+				<center>
+					<div class="cmd cmd-widget reportModeHidden" data-type="action" data-subtype="message" data-template="default" data-cmd_id="#wdgtCmd_id_notification#" data-cmd_uid="cmd#wdgtCmd_id_notification##uid#" data-version="#version#" data-eqlogic_id="21">
+			<div class="content-lg notificationCmd">
+			  <div class="title ">
+			<div class="cmdName">#wdgtCmd_name_notification#</div>
+		  </div>
+				<input class="form-control input-sm paramTitle" placeholder="Titre" data-cmd_id="#wdgtCmd_id_notification#">
+				<textarea class="form-control input-sm message" rows="2" placeholder="Message" data-cmd_uid="cmd#wdgtCmd_id_notification##uid#" data-cmd_id="#wdgtCmd_id_notification#"></textarea>
+				<a class="btn btn-xs execute">Notification</a>
+			</div>
+			<script>
+				if('#wdgtCmd_isVisible_notification#' == '0'){
+					$('.cmd[data-cmd_uid=cmd#wdgtCmd_id_notification##uid#] .notificationCmd').hide();
+				}
+				if('#wdgtCmd_isVisible_notification#' == '1'){
+					$('.cmd[data-cmd_uid=cmd#wdgtCmd_id_notification##uid#] .notificationCmd').show();
+				}
+				$('.cmd[data-cmd_uid=cmd#wdgtCmd_id_notification##uid#] .execute').on('click', function() {
+					jeedom.cmd.execute({id: '#wdgtCmd_id_notification#', value: {title: $('.cmd[data-cmd_uid=cmd#wdgtCmd_id_notification##uid#] .paramTitle').value(), message: $('.cmd[data-cmd_uid=cmd#wdgtCmd_id_notification##uid#] .message').value()}});
+				});
+			</script>
+		</div>
+
+	</center>
+	</div>
+	</center>
+</div>
