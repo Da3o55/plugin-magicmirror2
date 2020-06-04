@@ -253,7 +253,7 @@
 			}
 			jeedom.cmd.update['#wdgtCmd_id_monitorstatus#']({display_value:'#wdgtCmd_isVisible_monitorstatus#'});
 			$('.cmd[data-cmd_uid=cmd#wdgtCmd_id_monitorstatus##uid#] .iconCmd').off().on('click', function () {
-			if("#wdgtCmd_isVisible_monitortoggle#" == '1' && "#wdgtCmd_value_monitorstatus#" != 2){
+			if('#wdgtCmd_value_status#' != '0' && '#wdgtCmd_isVisible_monitortoggle#' == '1' && "#wdgtCmd_value_monitorstatus#" != 2){
 				jeedom.cmd.execute({id: '#wdgtCmd_id_monitorstatus#'});
 			}else{
 				//alert("Action désactivée !");
