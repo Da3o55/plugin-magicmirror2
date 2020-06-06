@@ -165,7 +165,7 @@ class magicmirror2 extends eqLogic {
 		// CMD Refresh widget
 		$refresh = $this->getCmd(null, 'mm_refresh');
 		if (!is_object($refresh)) {
-			$refresh = new networksCmd();
+			$refresh = new magicmirror2Cmd();
 			$refresh->setLogicalId('mm_refresh');
 			$refresh->setIsVisible(1);
 			$refresh->setName(__('Rafraîchir', __FILE__));
