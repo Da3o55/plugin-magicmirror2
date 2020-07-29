@@ -295,8 +295,10 @@ class magicmirror2 extends eqLogic {
 		$changed = false;
 		$tmpStatus = 0;
 		$myhost = $this->getConfiguration('magicmirror_ip');
+		$myport = $this->getConfiguration('cjmm_customport');
+		if($myport == ""){ $myport = "8080"; }
 		$headers = array('Content-type: application/json');
-		$ch = curl_init ("http://".$myhost.":8080/");
+		$ch = curl_init ("http://".$myhost.":".$myport."/");
 		curl_setopt ($ch, CURLOPT_POST, false); 
 		curl_setopt ($ch, CURLOPT_TIMEOUT, 1);
 		curl_setopt ($ch, CURLOPT_RETURNTRANSFER, true);
@@ -326,8 +328,10 @@ class magicmirror2 extends eqLogic {
 		
 		$changed = false;
 		$myhost = $this->getConfiguration('magicmirror_ip');
+		$myport = $this->getConfiguration('cjmm_customport');
+		if($myport == ""){ $myport = "8080"; }
 		$headers = array('Content-type: application/json');
-		$ch = curl_init ("http://".$myhost.":8080/remote?action=SHUTDOWN");
+		$ch = curl_init ("http://".$myhost.":".$myport."/remote?action=SHUTDOWN");
 		curl_setopt ($ch, CURLOPT_POST, false); 
 		curl_setopt ($ch, CURLOPT_TIMEOUT, 1);
 		curl_setopt ($ch, CURLOPT_RETURNTRANSFER, true);
@@ -358,8 +362,10 @@ class magicmirror2 extends eqLogic {
 		
 		$changed = false;
 		$myhost = $this->getConfiguration('magicmirror_ip');
+		$myport = $this->getConfiguration('cjmm_customport');
+		if($myport == ""){ $myport = "8080"; }
 		$headers = array('Content-type: application/json');
-		$ch = curl_init ("http://".$myhost.":8080/remote?action=MONITORSTATUS");
+		$ch = curl_init ("http://".$myhost.":".$myport."/remote?action=MONITORSTATUS");
 		curl_setopt ($ch, CURLOPT_POST, false); 
 		curl_setopt ($ch, CURLOPT_TIMEOUT, 1);
 		curl_setopt ($ch, CURLOPT_RETURNTRANSFER, true);
@@ -407,8 +413,10 @@ class magicmirror2 extends eqLogic {
 		
 		$changed = false;
 		$myhost = $this->getConfiguration('magicmirror_ip');
+		$myport = $this->getConfiguration('cjmm_customport');
+		if($myport == ""){ $myport = "8080"; }
 		$headers = array('Content-type: application/json');
-		$ch = curl_init ("http://".$myhost.":8080/remote?action=MODULE_DATA");
+		$ch = curl_init ("http://".$myhost.":".$myport."/remote?action=MODULE_DATA");
 		curl_setopt ($ch, CURLOPT_POST, false);
 		curl_setopt ($ch, CURLOPT_TIMEOUT, 2);		
 		curl_setopt ($ch, CURLOPT_RETURNTRANSFER, true);
@@ -453,7 +461,9 @@ class magicmirror2 extends eqLogic {
 		$tmpCmdResult = false;
 		$headers = array('Content-type: application/json');
 		$myhost = $this->getConfiguration('magicmirror_ip');
-		$ch = curl_init ("http://".$myhost.":8080/remote?action=REBOOT");
+		$myport = $this->getConfiguration('cjmm_customport');
+		if($myport == ""){ $myport = "8080"; }
+		$ch = curl_init ("http://".$myhost.":".$myport."/remote?action=REBOOT");
 		curl_setopt ($ch, CURLOPT_POST, false); 
 		curl_setopt ($ch, CURLOPT_TIMEOUT, 2);
 		curl_setopt ($ch, CURLOPT_RETURNTRANSFER, true);
@@ -491,7 +501,9 @@ class magicmirror2 extends eqLogic {
 		$tmpCmdResult = false;
 		$headers = array('Content-type: application/json');
 		$myhost = $this->getConfiguration('magicmirror_ip');
-		$ch = curl_init ("http://".$myhost.":8080/remote?action=RESTART");
+		$myport = $this->getConfiguration('cjmm_customport');
+		if($myport == ""){ $myport = "8080"; }
+		$ch = curl_init ("http://".$myhost.":".$myport."/remote?action=RESTART");
 		curl_setopt ($ch, CURLOPT_POST, false);
 		curl_setopt ($ch, CURLOPT_TIMEOUT, 2);
 		curl_setopt ($ch, CURLOPT_RETURNTRANSFER, true);
@@ -529,7 +541,9 @@ class magicmirror2 extends eqLogic {
 		$tmpCmdResult = false;
 		$headers = array('Content-type: application/json');
 		$myhost = $this->getConfiguration('magicmirror_ip');
-		$ch = curl_init ("http://".$myhost.":8080/remote?action=REFRESH");
+		$myport = $this->getConfiguration('cjmm_customport');
+		if($myport == ""){ $myport = "8080"; }
+		$ch = curl_init ("http://".$myhost.":".$myport."/remote?action=REFRESH");
 		curl_setopt ($ch, CURLOPT_POST, false);
 		curl_setopt ($ch, CURLOPT_TIMEOUT, 2);
 		curl_setopt ($ch, CURLOPT_RETURNTRANSFER, true);
@@ -564,8 +578,10 @@ class magicmirror2 extends eqLogic {
 		$changed = false;
 		$tmpCmdResult = false;
 		$myhost = $this->getConfiguration('magicmirror_ip');
+		$myport = $this->getConfiguration('cjmm_customport');
+		if($myport == ""){ $myport = "8080"; }
 		$headers = array('Content-type: application/json');
-		$ch = curl_init ("http://".$myhost.":8080/remote?action=MONITORTOGGLE");
+		$ch = curl_init ("http://".$myhost.":".$myport."/remote?action=MONITORTOGGLE");
 		curl_setopt ($ch, CURLOPT_POST, false);
 		curl_setopt ($ch, CURLOPT_TIMEOUT, 2);
 		curl_setopt ($ch, CURLOPT_RETURNTRANSFER, true);
@@ -603,8 +619,10 @@ class magicmirror2 extends eqLogic {
 		$changed = false;
 		$tmpCmdResult = 0;
 		$myhost = $this->getConfiguration('magicmirror_ip');
+		$myport = $this->getConfiguration('cjmm_customport');
+		if($myport == ""){ $myport = "8080"; }
 		$headers = array('Content-type: application/json');
-		$ch = curl_init ("http://".$myhost.":8080/remote?action=TOGGLE&module=MMM-BackgroundSlideshow");
+		$ch = curl_init ("http://".$myhost.":".$myport."/remote?action=TOGGLE&module=MMM-BackgroundSlideshow");
 		curl_setopt ($ch, CURLOPT_POST, false);
 		curl_setopt ($ch, CURLOPT_TIMEOUT, 2);
 		curl_setopt ($ch, CURLOPT_RETURNTRANSFER, true);
@@ -641,10 +659,12 @@ class magicmirror2 extends eqLogic {
 		$changed = false;
 		$tmpCmdResult = false;
 		$myhost = $this->getConfiguration('magicmirror_ip');
+		$myport = $this->getConfiguration('cjmm_customport');
+		if($myport == ""){ $myport = "8080"; }
 		
 		$notifParams = '{"title":"'.$_options["title"].'","message":"'.$_options["message"].'","timer": '.($this->getConfiguration('cjmm_notification_timer')).', "type": "'.($this->getConfiguration('cjmm_notification_type')).'"}';
 		$headers = array('Content-type: application/json');
-		$ch = curl_init ("http://".$myhost.":8080/api/module/alert/showalert");
+		$ch = curl_init ("http://".$myhost.":".$myport."/api/module/alert/showalert");
 		curl_setopt ($ch, CURLOPT_POST, true);
 		curl_setopt ($ch, CURLOPT_TIMEOUT, 2);
 		curl_setopt ($ch, CURLOPT_POSTFIELDS, $notifParams);
@@ -684,7 +704,11 @@ class magicmirror2 extends eqLogic {
 		$uid = $this->getId() . self::UIDDELIMITER . mt_rand() . self::UIDDELIMITER;
 		$replace['#uid#'] = $uid;
 		
-		$replace['#magic_url#'] = $this->getConfiguration('magicmirror_ip');;
+		$replace['#magic_url#'] = $this->getConfiguration('magicmirror_ip');
+		$myport = $this->getConfiguration('cjmm_customport');
+		if($myport == ""){ $myport = "8080"; }
+		$replace['#magic_customport#'] = $this->getConfiguration('cjmm_customport');
+
 
 		$temps = $this->getCmd(null,'mm_remotePage');
 		$replace ['#wdgtCmd_id_remotePage#'] = $temps->getId();
