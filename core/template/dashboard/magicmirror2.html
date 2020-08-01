@@ -72,7 +72,7 @@
 			jeedom.cmd.update['#wdgtCmd_id_remotePage#']({display_value:'#wdgtCmd_isVisible_remotePage#'});
 			$('.cmd[data-cmd_uid=cmd#wdgtCmd_id_remotePage##uid#] .iconCmd').off().on('click', function () {
 			  //jeedom.cmd.execute({id: '#wdgtCmd_id_status#'});
-			  window.open("http://#magic_url#:8080/remote.html");			  
+			  window.open("http://#magic_url#:#magic_customport#/remote.html");			  
 			});
 		  </script>
 		</div>

@@ -707,7 +707,7 @@ class magicmirror2 extends eqLogic {
 		$replace['#magic_url#'] = $this->getConfiguration('magicmirror_ip');
 		$myport = $this->getConfiguration('cjmm_customport');
 		if($myport == ""){ $myport = "8080"; }
-		$replace['#magic_customport#'] = $this->getConfiguration('cjmm_customport');
+		$replace['#magic_customport#'] = $myport;
 
 
 		$temps = $this->getCmd(null,'mm_remotePage');
