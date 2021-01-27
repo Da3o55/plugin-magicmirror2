@@ -101,6 +101,12 @@ foreach (jeeObject::all() as $object) {
         </div>
 		<a class="btn btn-default cmdAction" data-cmd="checkAPI">Tester l'accès à l'api&nbsp;&nbsp;<span class="iconCheck"><i class='fas fa-question'></i></span></a> <span id="cjmm_apiCheckedAdvise"></span>
 		<input type="hidden" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="cjmm_apiChecked"  id="cjmm_apiChecked">
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label">{{Port}}</label>
+        <div class="col-sm-3">
+            <input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="cjmm_customport" placeholder="8080"/>
+        </div>
 		<script>
 		var cmd = $('.cmdAction[data-cmd=checkAPI]');
 
@@ -124,6 +130,7 @@ foreach (jeeObject::all() as $object) {
                 data: {
                     action: "checkAPI",
 					ip_addr: ''+($('.eqLogicAttr[data-l2key=magicmirror_ip]').value())+'',
+					customport: ''+($('.eqLogicAttr[data-l2key=cjmm_customport]').value())+'',
                 },
                 dataType: 'json',
                 global: false,

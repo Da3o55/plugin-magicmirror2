@@ -29,9 +29,10 @@ try {
 	
 	if (init('action') == 'checkAPI') {
 		$myhost = $_POST['ip_addr'];
-		log::add('magicmirror2','debug',$tmpLogPrefix.'::host ip -> '.$myhost.'');
+		$myport = $_POST['customport'];
+		log::add('magicmirror2','debug',$tmpLogPrefix.'::host ip -> '.$myhost.':'.$myport.'');
 		$headers = array('Content-type: application/json');
-		$ch = curl_init ("http://".$myhost.":8080/api/test");
+		$ch = curl_init ("http://".$myhost.":".$myport."/api/test");
 		curl_setopt ($ch, CURLOPT_POST, false);
 		curl_setopt ($ch, CURLOPT_TIMEOUT, 2);
 		curl_setopt ($ch, CURLOPT_RETURNTRANSFER, true);
