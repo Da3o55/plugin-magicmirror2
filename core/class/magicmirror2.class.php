@@ -147,6 +147,36 @@ class magicmirror2 extends eqLogic {
 			$mm_reload->save();
 		}
 
+		// CMD Monitor Off
+		$mm_monitorOff = $this->getCmd(null, 'mm_monitorOff');
+		if (!is_object($mm_monitorOff)) {
+			$mm_monitorOff = new magicmirror2Cmd();
+			$mm_monitorOff->setLogicalId('mm_monitorOff');
+			$mm_monitorOff->setIsVisible(1);
+			$mm_monitorOff->setName(__('AffichageOff', __FILE__));
+			$mm_monitorOff->setConfiguration('description',__('HDMI Off.', __FILE__));
+			$mm_monitorOff->setType('action');
+			$mm_monitorOff->setSubType('other');
+			$mm_monitorOff->setEqLogic_id($this->getId());
+			$mm_monitorOff->setOrder(3);
+			$mm_monitorOff->save();
+		}
+		
+		// CMD Monitor On
+		$mm_monitorOn = $this->getCmd(null, 'mm_monitorOn');
+		if (!is_object($mm_monitorOn)) {
+			$mm_monitorOn = new magicmirror2Cmd();
+			$mm_monitorOn->setLogicalId('mm_monitorOn');
+			$mm_monitorOn->setIsVisible(1);
+			$mm_monitorOn->setName(__('AffichageOn', __FILE__));
+			$mm_monitorOn->setConfiguration('description',__('HDMI On.', __FILE__));
+			$mm_monitorOn->setType('action');
+			$mm_monitorOn->setSubType('other');
+			$mm_monitorOn->setEqLogic_id($this->getId());
+			$mm_monitorOn->setOrder(3);
+			$mm_monitorOn->save();
+		}
+		
 		// CMD Refresh (html)
 		$mm_refreshHtml = $this->getCmd(null, 'mm_refreshHtml');
 		if (!is_object($mm_refreshHtml)) {
@@ -572,6 +602,84 @@ class magicmirror2 extends eqLogic {
 		return $changed;
 	}
 
+	public function doMM_MonitorOn() {
+		$tmpLogPrefix = ($this->getName()).'::function::'.__FUNCTION__;
+		log::add('magicmirror2','debug',$tmpLogPrefix);
+		$changed = false;
+		$tmpCmdResult = false;
+		$headers = array('Content-type: application/json');
+		$myhost = $this->getConfiguration('magicmirror_ip');
+		$myport = $this->getConfiguration('cjmm_customport');
+		if($myport == ""){ $myport = "8080"; }
+		$ch = curl_init ("http://".$myhost.":".$myport."/api/monitor/on");
+		curl_setopt ($ch, CURLOPT_POST, false);
+		curl_setopt ($ch, CURLOPT_TIMEOUT, 2);
+		curl_setopt ($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt ($ch, CURLOPT_HTTPHEADER, $headers);
+		$response = curl_exec ($ch);
+		if(curl_errno($ch)){
+			//throw new Exception(curl_error($ch));
+			log::add('magicmirror2','debug',$tmpLogPrefix.'::Host Unreachable, cURL ERROR('.curl_errno($ch).')');
+		}
+		curl_close($ch);
+		log::add('magicmirror2','debug',$tmpLogPrefix.'::curl result::'.(print_r($response,true)));
+		$json = json_decode($response, true);
+		if($json["success"] == true){
+			switch($json["success"]){
+				case false:
+					$tmpCmdResult = 0;
+					break;
+				case true:
+					$changed = 1;
+					$tmpCmdResult = 1;
+					break;
+			}
+		}else{
+				log::add('magicmirror2','error',($this->getName()).'::Erreur lors de l\'execution de la commande !');
+		}
+		log::add('magicmirror2','debug',$tmpLogPrefix.'::tmpCmdResult->'.$tmpCmdResult);
+		return $changed;
+	}
+	
+	public function doMM_MonitorOff() {
+		$tmpLogPrefix = ($this->getName()).'::function::'.__FUNCTION__;
+		log::add('magicmirror2','debug',$tmpLogPrefix);
+		$changed = false;
+		$tmpCmdResult = false;
+		$headers = array('Content-type: application/json');
+		$myhost = $this->getConfiguration('magicmirror_ip');
+		$myport = $this->getConfiguration('cjmm_customport');
+		if($myport == ""){ $myport = "8080"; }
+		$ch = curl_init ("http://".$myhost.":".$myport."/api/monitor/off");
+		curl_setopt ($ch, CURLOPT_POST, false);
+		curl_setopt ($ch, CURLOPT_TIMEOUT, 2);
+		curl_setopt ($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt ($ch, CURLOPT_HTTPHEADER, $headers);
+		$response = curl_exec ($ch);
+		if(curl_errno($ch)){
+			//throw new Exception(curl_error($ch));
+			log::add('magicmirror2','debug',$tmpLogPrefix.'::Host Unreachable, cURL ERROR('.curl_errno($ch).')');
+		}
+		curl_close($ch);
+		log::add('magicmirror2','debug',$tmpLogPrefix.'::curl result::'.(print_r($response,true)));
+		$json = json_decode($response, true);
+		if($json["success"] == true){
+			switch($json["success"]){
+				case false:
+					$tmpCmdResult = 0;
+					break;
+				case true:
+					$tmpCmdResult = 1;
+					$changed = 1;
+					break;
+			}
+		}else{
+				log::add('magicmirror2','error',($this->getName()).'::Erreur lors de l\'execution de la commande !');
+		}
+		log::add('magicmirror2','debug',$tmpLogPrefix.'::tmpCmdResult->'.$tmpCmdResult);
+		return $changed;
+	}
+	
 	public function doMM_MonitorToggle() {
 		$tmpLogPrefix = ($this->getName()).'::function::'.__FUNCTION__;
 		log::add('magicmirror2','debug',$tmpLogPrefix);
@@ -819,7 +927,7 @@ class magicmirror2Cmd extends cmd {
 		if (!is_object($eqLogic) || $eqLogic->getIsEnable() != 1) {
 			throw new Exception(__("Equipement désactivé impossible d'exécuter la commande : " . $this->getHumanName(), __FILE__));
 		}
-		log::add('magicmirror2','debug','execute: '.(print_r($_options,true)));
+		log::add('magicmirror2','debug','execute: '.($this->getLogicalId()).'-'.(print_r($_options,true)));
 		$changed = 0;
         switch ($this->getLogicalId()) {
 			case "mm_poweroff":
@@ -843,6 +951,12 @@ class magicmirror2Cmd extends cmd {
 				break;
 			case "mm_reload":
 				$changed = $eqLogic->doMM_Reload() ||$changed;
+				break;
+			case "mm_monitorOn":
+				$changed = $eqLogic->doMM_MonitorOn() ||$changed;
+				break;
+			case "mm_monitorOff":
+				$changed = $eqLogic->doMM_MonitorOff() ||$changed;
 				break;
 			case "mm_refreshHtml":
 				$changed = $eqLogic->doMM_RefreshHtml() ||$changed;
