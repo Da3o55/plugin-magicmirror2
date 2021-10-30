@@ -25,7 +25,7 @@ function magicmirror2_install() {
 function magicmirror2_update() {
     foreach (eqLogic::byType('magicmirror2') as $eqLogic) {
 		// CMD Monitor Check Status
-	   	$mm_monitorgetbrightness = $this->getCmd(null, 'mm_monitorgetbrightness');
+	   	$mm_monitorgetbrightness = $eqLogic->getCmd(null, 'mm_monitorgetbrightness');
 		if (!is_object($mm_monitorgetbrightness)) {
 			$mm_monitorgetbrightness = new magicmirror2Cmd();
 			$mm_monitorgetbrightness->setLogicalId('mm_monitorgetbrightness');
@@ -34,12 +34,12 @@ function magicmirror2_update() {
 			$mm_monitorgetbrightness->setConfiguration('description',__('Valeur de la luminosité.', __FILE__));
 			$mm_monitorgetbrightness->setType('info');
 			$mm_monitorgetbrightness->setSubType('numeric');
-			$mm_monitorgetbrightness->setEqLogic_id($this->getId());
+			$mm_monitorgetbrightness->setEqLogic_id($eqLogic->getId());
 			$mm_monitorgetbrightness->setOrder(6);
 			$mm_monitorgetbrightness->save();
  		}
 		// CMD Set Brightness
-		$mm_monitorBrightness = $this->getCmd(null, 'mm_monitorBrightness');
+		$mm_monitorBrightness = $eqLogic->getCmd(null, 'mm_monitorBrightness');
 		if (!is_object($mm_monitorBrightness)) {
 			$mm_monitorBrightness = new magicmirror2Cmd();
 			$mm_monitorBrightness->setLogicalId('mm_monitorBrightness');
@@ -48,7 +48,7 @@ function magicmirror2_update() {
 			$mm_monitorBrightness->setConfiguration('description',__('Luminosité de 1 à 100.', __FILE__));
 			$mm_monitorBrightness->setType('action');
 			$mm_monitorBrightness->setSubType('slider');
-			$mm_monitorBrightness->setEqLogic_id($this->getId());
+			$mm_monitorBrightness->setEqLogic_id($eqLogic->getId());
 			$mm_monitorBrightness->setOrder(3);
 			$mm_monitorBrightness->save();
 		}
