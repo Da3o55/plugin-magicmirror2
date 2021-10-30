@@ -183,7 +183,7 @@ class magicmirror2 extends eqLogic {
 			$mm_monitorBrightness = new magicmirror2Cmd();
 			$mm_monitorBrightness->setLogicalId('mm_monitorBrightness');
 			$mm_monitorBrightness->setIsVisible(1);
-			$mm_monitorBrightness->setName(__('Commande de Luminosité', __FILE__));
+			$mm_monitorBrightness->setName(__('Luminosité', __FILE__));
 			$mm_monitorBrightness->setConfiguration('description',__('Luminosité de 1 à 100.', __FILE__));
 			$mm_monitorBrightness->setType('action');
 			$mm_monitorBrightness->setSubType('slider');
