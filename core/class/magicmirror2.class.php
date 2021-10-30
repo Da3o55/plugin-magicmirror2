@@ -176,6 +176,21 @@ class magicmirror2 extends eqLogic {
 			$mm_monitorOn->setOrder(3);
 			$mm_monitorOn->save();
 		}
+
+		// CMD Set Brightness
+		$mm_monitorBrightness = $this->getCmd(null, 'mm_monitorBrightness');
+		if (!is_object($mm_monitorBrightness)) {
+			$mm_monitorBrightness = new magicmirror2Cmd();
+			$mm_monitorBrightness->setLogicalId('mm_monitorBrightness');
+			$mm_monitorBrightness->setIsVisible(1);
+			$mm_monitorBrightness->setName(__('Commande de Luminosité', __FILE__));
+			$mm_monitorBrightness->setConfiguration('description',__('Luminosité de 1 à 100.', __FILE__));
+			$mm_monitorBrightness->setType('action');
+			$mm_monitorBrightness->setSubType('slider');
+			$mm_monitorBrightness->setEqLogic_id($this->getId());
+			$mm_monitorBrightness->setOrder(3);
+			$mm_monitorBrightness->save();
+		}
 		
 		// CMD Refresh (html)
 		$mm_refreshHtml = $this->getCmd(null, 'mm_refreshHtml');
@@ -236,7 +251,22 @@ class magicmirror2 extends eqLogic {
 			$mm_monitorstatus->setOrder(6);
 			$mm_monitorstatus->save();
 		}
-		
+
+		// CMD Monitor Check Status
+   		$mm_monitorgetbrightness = $this->getCmd(null, 'mm_monitorgetbrightness');
+		if (!is_object($mm_monitorgetbrightness)) {
+			$mm_monitorgetbrightness = new magicmirror2Cmd();
+			$mm_monitorgetbrightness->setLogicalId('mm_monitorgetbrightness');
+			$mm_monitorgetbrightness->setIsVisible(1);
+			$mm_monitorgetbrightness->setName(__('Valeur Luminosité', __FILE__));
+			$mm_monitorgetbrightness->setConfiguration('description',__('Valeur de la luminosité.', __FILE__));
+			$mm_monitorgetbrightness->setType('info');
+			$mm_monitorgetbrightness->setSubType('numeric');
+			$mm_monitorgetbrightness->setEqLogic_id($this->getId());
+			$mm_monitorgetbrightness->setOrder(6);
+			$mm_monitorgetbrightness->save();
+ 		}
+			
 		// CMD Monitor Change Status
    		$mm_monitortoggle = $this->getCmd(null, 'mm_monitortoggle');
 		if (!is_object($mm_monitortoggle)) {
@@ -349,6 +379,7 @@ class magicmirror2 extends eqLogic {
 		log::add('magicmirror2','debug',$tmpLogPrefix.'::tmpStatus='.$tmpStatus);
 		$changed = $this->checkAndUpdateCmd('mm_status', $tmpStatus) || $changed;
 		log::add('magicmirror2','debug',$tmpLogPrefix.'::changed? #'.$changed.'#');
+		
 		return $changed;
 	}
 
@@ -484,6 +515,40 @@ class magicmirror2 extends eqLogic {
 		return $changed;
 	}
 
+	public function getMM_MonitorBrightness() {
+		$tmpLogPrefix = ($this->getName()).'::function::'.__FUNCTION__;
+		log::add('magicmirror2','debug',$tmpLogPrefix);
+		
+		$changed = false;
+		$myhost = $this->getConfiguration('magicmirror_ip');
+		$myport = $this->getConfiguration('cjmm_customport');
+		if($myport == ""){ $myport = "8080"; }
+		$headers = array('Content-type: application/json');
+		$ch = curl_init ("http://".$myhost.":".$myport."/api/brightness");
+		curl_setopt ($ch, CURLOPT_POST, false); 
+		curl_setopt ($ch, CURLOPT_TIMEOUT, 1);
+		curl_setopt ($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt ($ch, CURLOPT_HTTPHEADER, $headers);
+		$response = curl_exec ($ch);
+		if(curl_errno($ch)){
+			//throw new Exception(curl_error($ch));
+			log::add('magicmirror2','debug',$tmpLogPrefix.'::Host Unreachable, cURL ERROR('.curl_errno($ch).')');
+		}
+		curl_close($ch);
+		$json = json_decode($response, true);
+		$tmpMonitorBrightness = 0;
+		log::add('magicmirror2','debug',$tmpLogPrefix.'::json result->'.(print_r($response,true)));
+		if($json['success']){
+			$tmpMonitorBrightness = $json["result"];
+		}else{
+			log::add('magicmirror2','error',($this->getName()).'::Erreur lors de la récupération du statut de la luminosité ! ');
+			return false;
+		}
+		log::add('magicmirror2','debug',$tmpLogPrefix.'::tmpMonitorBrightness='.$tmpMonitorBrightness);
+		$changed = $this->checkAndUpdateCmd('mm_monitorgetbrightness', $tmpMonitorBrightness) || $changed;
+		//log::add('magicmirror2','debug',$tmpLogPrefix.'::changed? #'.$changed.'#');
+		return true;
+	}
 	public function doMM_Restart() {
 		$tmpLogPrefix = ($this->getName()).'::function::'.__FUNCTION__;
 		log::add('magicmirror2','debug',$tmpLogPrefix);
@@ -679,7 +744,49 @@ class magicmirror2 extends eqLogic {
 		log::add('magicmirror2','debug',$tmpLogPrefix.'::tmpCmdResult->'.$tmpCmdResult);
 		return $changed;
 	}
-	
+
+	public function doMM_MonitorSetBrightness($value) {
+		$tmpLogPrefix = ($this->getName()).'::function::'.__FUNCTION__;
+		log::add('magicmirror2','debug',$tmpLogPrefix);
+		//$value="45;
+		$changed = false;
+		$tmpCmdResult = false;
+		$headers = array('Content-type: application/json');
+		$myhost = $this->getConfiguration('magicmirror_ip');
+		$myport = $this->getConfiguration('cjmm_customport');
+		if($myport == ""){ $myport = "8080"; }
+		//$value=10;
+		$ch = curl_init ("http://".$myhost.":".$myport."/api/brightness/$value");
+		curl_setopt ($ch, CURLOPT_POST, false);
+		curl_setopt ($ch, CURLOPT_TIMEOUT, 2);
+		curl_setopt ($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt ($ch, CURLOPT_HTTPHEADER, $headers);
+		$response = curl_exec ($ch);
+		if(curl_errno($ch)){
+			//throw new Exception(curl_error($ch));
+			log::add('magicmirror2','debug',$tmpLogPrefix.'::Host Unreachable, cURL ERROR('.curl_errno($ch).')');
+		}
+		curl_close($ch);
+		log::add('magicmirror2','debug',$tmpLogPrefix.'::curl result::'.(print_r($response,true)));
+		$json = json_decode($response, true);
+		if($json["success"] == true){
+			switch($json["success"]){
+				case false:
+					$tmpCmdResult = 0;
+					break;
+				case true:
+					$tmpCmdResult = 1;
+					$changed = 1;
+					break;
+			}
+		}else{
+				log::add('magicmirror2','error',($this->getName()).'::Erreur lors de l\'execution de la commande !');
+		}
+		log::add('magicmirror2','debug',$tmpLogPrefix.'::tmpCmdResult->'.$tmpCmdResult);
+		$this->getMM_MonitorBrightness(); //force get value
+		return $value;
+	}
+		
 	public function doMM_MonitorToggle() {
 		$tmpLogPrefix = ($this->getName()).'::function::'.__FUNCTION__;
 		log::add('magicmirror2','debug',$tmpLogPrefix);
@@ -886,6 +993,17 @@ class magicmirror2 extends eqLogic {
 		$replace ['#wdgtCmd_isVisible_notification#'] = $temps->getIsVisible();
 		$replace ['#wdgtCmd_name_notification#'] = __($temps->getName(), __FILE__);
 		
+		$temps = $this->getCmd(null,'mm_monitorBrightness');
+		$replace ['#wgtCmd_id_brightness#'] = $temps->getId();
+		$replace ['#wdgtCmd_isVisible_brightness#'] = $temps->getIsVisible();
+		$replace ['#wdgtCmd_name_brightness#'] = __($temps->getName(), __FILE__);
+		
+		$temps = $this->getCmd(null,'mm_monitorGetBrightness');
+		$replace ['#wdgtCmd_brightness_value#'] = $temps->execCmd();
+		//$replace ['#wdgtCmd_isVisible_brightness#'] = $temps->getIsVisible();
+		//$replace ['#wdgtCmd_name_brightness#'] = __($temps->getName(), __FILE__);
+		
+		//mm_monitorGetBrightness
 		$html = template_replace($replace, getTemplate('core', $_version, 'magicmirror2','magicmirror2'));
 		cache::set('MagicMirrorWidget' . $_version . $this->getId(), $html, 0);
 		return $html;
@@ -936,6 +1054,7 @@ class magicmirror2Cmd extends cmd {
 			case "mm_status":
 				break;
 			case "mm_refresh":
+				$eqLogic->getMM_MonitorBrightness();
 				$changed = $eqLogic->getMM_Status() || $changed;
 				if(is_object($eqLogic->getCmd(null, 'mm_monitorstatus')) && (($eqLogic->getCmd(null, 'mm_monitorstatus'))->getIsVisible())){
 					$changed = $eqLogic->getMM_MonitorStatus() || $changed;
@@ -958,6 +1077,13 @@ class magicmirror2Cmd extends cmd {
 			case "mm_monitorOff":
 				$changed = $eqLogic->doMM_MonitorOff() ||$changed;
 				break;
+			case "mm_monitorBrightness":
+				$value = $_options['slider'];
+				log::add('magicmirror2','debug',$value);
+				$changed = $eqLogic->doMM_MonitorSetBrightness($value) ||$changed;
+				break;
+			case "mm_monitorGetBrightness":
+				$changed = $eqLogic->getMM_MonitorBrightness() ||$changed;
 			case "mm_refreshHtml":
 				$changed = $eqLogic->doMM_RefreshHtml() ||$changed;
 				break;
@@ -976,7 +1102,7 @@ class magicmirror2Cmd extends cmd {
 				break;
 		}
 		log::add('magicmirror2','debug','execute::changed?::'.$changed);
-		if($changed){
+		if(true){
 			$eqLogic->refreshWidget();
 		}
     }

@@ -23,7 +23,10 @@ function magicmirror2_install() {
 }
 
 function magicmirror2_update() {
-    
+    foreach (eqLogic::byType('magicmirror2') as $eqLogic) {
+		// CMD Monitor Check Status
+	
+
 }
 
 

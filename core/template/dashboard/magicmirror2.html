@@ -308,6 +308,72 @@
 		  </script>
 		</div>
 
+<!-- SLIDER -->
+
+<div class="cmd cmd-widget " data-type="action" data-subtype="numeric" data-template="tmplicon" data-cmd_id="#wgtCmd_id_brightness#" data-cmd_uid="cmd#wgtCmd_id_brightness#__#uid#__" data-version="dashboard" data-eqlogic_id="20">
+  <div class="title ">
+    <div class="cmdName">#wdgtCmd_name_brightness# (#wdgtCmd_brightness_value#)</div>
+  </div>
+  <!--<div class="content-sm ">
+    <span class="cursor iconCmdcmd#wgtCmd_id_brightness#__#uid#__ iconCmd" data-state="off"><i class="icon jeedom-lumiere-off"></i></span>
+  </div>-->
+  <div class="stateicon content-sm ">
+	<span class="iconCmd"><i class='fas fa-times'></i></span>
+  </div>
+  <div class="value">
+    <div class="slider ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content slider#wgtCmd_id_brightness##uid# sliderValue" value="#wgtCmd_brightness_value#">
+      <span class="valuecmd#wgtCmd_id_brightness#__#uid#__ sliderValue"></span>
+    <div class="ui-slider-range ui-corner-all ui-widget-header ui-slider-range-min" style="width: 0%;"></div><span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default" style="left: 0%;"></span></div>
+    
+  </div>
+  <script>
+    jeedom.cmd.update['#wgtCmd_id_brightness#'] = function(_options){
+      var cmd = $('.cmd[data-cmd_id=#wgtCmd_id_brightness#]');
+      if('#_time_widget_#' == '1'){
+        jeedom.cmd.displayDuration(_options.valueDate,  cmd.find('.timeCmd'));
+      }else{
+        cmd.find('.timeCmd').remove();
+      }
+      var minValue = ('10' == '') ? 10 : parseInt('10');
+      var maxValue = ('100' == '') ? 100 : parseInt('100');
+      var stateValue = ('#wdgtCmd_brightness_value#' == '') ? 0 : parseInt(_options.display_value);
+      cmd.find('.slider').slider({
+        min: minValue,
+        max: maxValue,
+        value: stateValue,
+		step: 10,
+        range: "min",
+        animate: false,
+        slide: function(event, ui) {
+          $(".valuecmd#wgtCmd_id_brightness#__#uid#__").show();
+          $(".valuecmd#wgtCmd_id_brightness#__#uid#__").html(ui.value);
+        }
+      });
+	  
+	  if('#wdgtCmd_value_status#' == 0) {
+		cmd.find('.iconCmd').empty().append("<i class='fas fa-times'></i>").attr('data-state', 'on');
+		cmd.find('.stateicon').show();
+		$('.slider#wgtCmd_id_brightness##uid#').hide();
+	  }else{
+		cmd.find('.stateicon').empty();
+		cmd.find('.stateicon').hide();
+	  }
+	  
+	  
+     /* if (stateValue > minValue) { 
+        cmd.find('.iconCmd').empty().append("<i class='icon_yellow icon jeedom-lumiere-on'></i>").attr('data-state', 'on');
+      }else {
+        cmd.find('.iconCmd').empty().append("<i class='icon jeedom-lumiere-off'></i>").attr('data-state', 'off');
+      }*/
+    }
+    jeedom.cmd.update['#wgtCmd_id_brightness#']({display_value:'#wdgtCmd_brightness_value#',valueDate:'2021-07-10 20:05:42',collectDate:'2021-07-10 20:05:42',alertLevel:'none'});
+    $(".cmd[data-cmd_uid=cmd#wgtCmd_id_brightness#__#uid#__] .slider").on('slidestop', function (event,ui) {
+      jeedom.cmd.execute({id: '#wgtCmd_id_brightness#', value: {slider: ui.value}});
+      $(".valuecmd#wgtCmd_id_brightness#__#uid#__").hide();
+    });
+  </script>
+</div>
+		
 <!-- NOTIFICATION -->
 		<div class="">
 				<center>
