@@ -526,7 +526,7 @@ class magicmirror2 extends eqLogic {
 		$headers = array('Content-type: application/json');
 		$ch = curl_init ("http://".$myhost.":".$myport."/api/brightness");
 		curl_setopt ($ch, CURLOPT_POST, false); 
-		curl_setopt ($ch, CURLOPT_TIMEOUT, 1);
+		curl_setopt ($ch, CURLOPT_TIMEOUT, 3);
 		curl_setopt ($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt ($ch, CURLOPT_HTTPHEADER, $headers);
 		$response = curl_exec ($ch);
