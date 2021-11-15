@@ -519,6 +519,13 @@ class magicmirror2 extends eqLogic {
 		$tmpLogPrefix = ($this->getName()).'::function::'.__FUNCTION__;
 		log::add('magicmirror2','debug',$tmpLogPrefix);
 		
+		// if status = 0, exit now and don't make curl query
+		$temps = $this->getCmd(null,'mm_status');
+		if(!$temps->execCmd()){
+			log::add('magicmirror2','debug',$tmpLogPrefix.'::exit now!, status='.$temps->execCmd().', don\'t make curl request');
+			return false;
+		}
+		
 		$changed = false;
 		$myhost = $this->getConfiguration('magicmirror_ip');
 		$myport = $this->getConfiguration('cjmm_customport');
